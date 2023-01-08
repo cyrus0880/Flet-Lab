@@ -22,12 +22,12 @@ from flet import (
 
 import uuid
 
+
 #WinBox Containet
 class WinBox(Container):
     def __init__(self,wm,title,left=20,top=20,*args, **kwargs):
         super().__init__(*args, **kwargs)
         # Container Prop
-        self.wm = wm
         self.boxuid = str(uuid.uuid4()) # WinBox uid for active or wm controller
         self.defaultWidth = 400
         self.defaultHeight = 250
@@ -35,20 +35,24 @@ class WinBox(Container):
         self.border_line_color = None  
         self.border_radius = 5
         self.appbar_color = colors.BLACK12
-
         self.width = self.defaultWidth
-        self.height = self.defaultHeight   
-        
+        self.height = self.defaultHeight
+        uid = self.boxuid.split("-")[-1]
         self.title = Row([
             Icon(icons.APPS_OUTLINED,color=colors.BLACK,scale=0.8),
-            Text(title,color=colors.BLACK,scale=0.8,weight=FontWeight.W_900)
+            Text(title,color=colors.BLACK,scale=0.8,weight=FontWeight.W_900),
+            Text(f"uid : {uid}",color=colors.BLACK,scale=0.8,weight=FontWeight.W_900)
         ])
         self.left=left
         self.top=top
+        self.wm = wm
+        
+        #main content use GestureDetector for click winbox put to top layer
+        #use on_tap to run __active function
         self.content = GestureDetector(
             content= self.__MainLayer(),
             mouse_cursor=MouseCursor.BASIC,
-            drag_interval=50,
+            drag_interval=5,
             on_tap=self.__active
         )
         
@@ -84,7 +88,7 @@ class WinBox(Container):
                             [
                                 Icon(icons.REMOVE,color=colors.BLACK54,scale=0.6),
                                 Icon(icons.FULLSCREEN,color=colors.BLACK54,scale=0.6),
-                                Icon(icons.CLOSE,color=colors.BLACK54,scale=0.6),
+                               Container(Icon(icons.CLOSE,color=colors.BLACK54,scale=0.6),on_click=self.__close),
                             ],
                             spacing=0
                         ),
@@ -107,8 +111,14 @@ class WinBox(Container):
         self.top = max(0, self.top + e.delta_y)
         self.left = max(0, self.left + e.delta_x)
         self.update()
-    def __active(self):
-        pass
+
+    def __close(self,e):
+        self.wm.controls = [x for x in self.wm.controls if x.boxuid != self.boxuid] 
+        self.wm.update()
+
+    def __active(self,e):
+        self.wm.controls = [x for x in self.wm.controls if x.boxuid != self.boxuid] + [self]
+        self.wm.update()
 
 class WebAppMDI(UserControl):
     def __init__(self,page: Page,*args, **kwargs):
@@ -121,19 +131,23 @@ class WebAppMDI(UserControl):
         self.wm = Stack(expand=True)
         
         box01 = WinBox(self.wm,"Box01")
-        self.wm.controls = [self.__addboxBTN(),box01]
+        self.wm.controls = [box01]
         
     def build(self):
-        return Container(self.wm,expand=True,bgcolor=colors.BLUE_100)
+        return Container(Column([self.wm,self.__addboxBTN()]),expand=True,bgcolor=colors.BLUE_100)
     
     def __addboxBTN(self):
         return Container(
-            IconButton(icons.ADD,icon_color=colors.WHITE),
-            border_radius=border_radius.all(20),
-            bgcolor=colors.BLACK45,
-            right=10,
-            bottom=10,
-            on_click=self.__addBox
+            Row(
+                [
+                    Container(
+                        IconButton(icons.ADD,icon_color=colors.WHITE,on_click=self.__addBox),
+                        border_radius=border_radius.all(20),
+                        bgcolor=colors.BLACK45,
+                    )
+                ],
+            ),
+            padding=Padding(10,10,10,10)
         )
     def __addBox(self,e):
         count = len([i for i in self.wm.controls if i.__class__.__name__ == "WinBox"])
@@ -150,5 +164,5 @@ def main(page: Page):
     page.add(app)
 
 if __name__ == '__main__':
-    app(target=main,port="8888",assets_dir="assets")
+    app(target=main,assets_dir="assets")
     
