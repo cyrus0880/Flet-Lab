@@ -9,7 +9,7 @@ Done
 Next:
 - Draggable Border for resize winbox
 
-[![Watch the video]](https://youtu.be/GR-Ym6q606g)
+![MDI_DEMO](../asset/Day01-1.gif)
 
 
 ## How to Run?
