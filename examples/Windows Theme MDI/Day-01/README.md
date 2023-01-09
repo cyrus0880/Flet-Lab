@@ -5,11 +5,10 @@ Done
 - add winbox to wm
 - click winbxo put on top layer (Active winbox)
 - click close to remove winbox in wm 
-
-Next:
 - Draggable Border for resize winbox
+- WinBox Class added MainContent Prop you can pass Row/Column/Container
 
-![MDI_DEMO](../asset/Day01-1.gif)
+![MDI_DEMO](../asset/Day01-2.gif)
 
 
 ## How to Run?
@@ -18,3 +17,5 @@ and run
 ```bash
 flet .\web.py --web
 ```
+
+Flet-Lab/examples/Windows Theme MDI/
