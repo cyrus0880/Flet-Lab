@@ -8,7 +8,7 @@ Done
 - Draggable Border for resize winbox
 - WinBox Class added MainContent Prop you can pass Row/Column/Container
 
-web-demo : http://mdi.flet.cyrix.tk/
+web-demo : [http://mdi.flet.cyrix.tk/](http://mdi.flet.cyrix.tk/)
 
 ![MDI_DEMO](../asset/Day01-2.gif)
 
