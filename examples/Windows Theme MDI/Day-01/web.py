@@ -40,9 +40,10 @@ class WinBox(Container):
         self.boxuid = str(uuid.uuid4()) # WinBox uid for active or wm controller
         self.defaultWidth = 400
         self.defaultHeight = 250
-        self.border_line_size = 2
+        self.border_line_size = 8
         self.border_line_color = None  
         self.border_radius = 5
+        self.border_corner = 10
         self.appbar_color = colors.BLACK12
         self.width = self.defaultWidth
         self.height = self.defaultHeight
@@ -105,32 +106,32 @@ class WinBox(Container):
             self.__onHorizontalDragTopLeft,
             left=0,
             top=0,
-            width=3,
-            height=3,
+            width=self.border_corner ,
+            height=self.border_corner ,
         )
         self.border_topright = BorderDetector(
             MouseCursor.RESIZE_UP_RIGHT,
             self.__onHorizontalDragTopRight,
             right=0,
             top=0,
-            width=3,
-            height=3,
+            width=self.border_corner ,
+            height=self.border_corner ,
         )
         self.border_bottomright = BorderDetector(
             MouseCursor.RESIZE_DOWN_RIGHT,
             self.__onHorizontalDragBottomRight,
             right=0,
             bottom=0,
-            width=3,
-            height=3,
+            width=self.border_corner ,
+            height=self.border_corner ,
         )
         self.border_bottomleft = BorderDetector(
             MouseCursor.RESIZE_DOWN_LEFT,
             self.__onHorizontalDragBottomLeft,
             left=0,
             bottom=0,
-            width=3,
-            height=3,
+            width=self.border_corner ,
+            height=self.border_corner ,
         )
         
         return Stack(
