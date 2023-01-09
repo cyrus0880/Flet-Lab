@@ -22,6 +22,7 @@ from flet import (
 
 import uuid
 
+#BorderGestureDetector class easy ueuse
 class BorderDetector(Container):
     def __init__(self,MouseCursor,event,*args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -189,7 +190,7 @@ class WinBox(Container):
             drag_interval=1,
             on_pan_update=self.__on_pan_update,
         )
-    
+###### Here is Mouse Drag and Move and Resice Logic START ######
     def __on_pan_update(self,e: DragUpdateEvent):
         self.top = max(0, self.top + e.delta_y)
         self.left = max(0, self.left + e.delta_x)
@@ -244,14 +245,6 @@ class WinBox(Container):
             self.__onHorizontalDragRight(e)
             self.__onHorizontalDragBottom(e)
             
-    def __close(self,e):
-        self.wm.controls = [x for x in self.wm.controls if x.boxuid != self.boxuid] 
-        self.wm.update()
-
-    def __active(self,e):
-        self.wm.controls = [x for x in self.wm.controls if x.boxuid != self.boxuid] + [self]
-        self.wm.update()
-        
     def _resizeUpdate(self):
         self.border_top.width = self.width
         self.border_top.update()
@@ -262,6 +255,18 @@ class WinBox(Container):
         self.border_right.height = self.height
         self.border_right.update()
         
+###### Here is Mouse Drag and Move and Resice Logic END ######        
+    
+    def __close(self,e):
+        self.wm.controls = [x for x in self.wm.controls if x.boxuid != self.boxuid] 
+        self.wm.update()
+
+    def __active(self,e):
+        self.wm.controls = [x for x in self.wm.controls if x.boxuid != self.boxuid] + [self]
+        self.wm.update()
+        
+
+# Main App Body
 class WebAppMDI(UserControl):
     def __init__(self,page: Page,*args, **kwargs):
         super().__init__(*args, **kwargs)
