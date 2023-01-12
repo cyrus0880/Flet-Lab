@@ -11,7 +11,7 @@ Done:
 
 web-demo : [http://mdi.flet.cyrix.tk/](http://mdi.flet.cyrix.tk/)
 
-![MDI_DEMO](../asset/Day02-1.gif)
+![MDI_DEMO](../asset/Day02-01.gif)
 
 ## How to Run?
 You can only copy my web.py to your dev-env
