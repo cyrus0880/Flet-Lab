@@ -9,6 +9,8 @@ web-demo : [http://mdi.flet.cyrix.tk/](http://mdi.flet.cyrix.tk/)
 You can only copy my web.py to your dev-env
 and run
 ```bash
+#need pip insatll pyjwt passlab
+pip insatll pyjwt passlab
 flet .\web.py --web
 ```
 
