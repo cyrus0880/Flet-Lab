@@ -12,7 +12,52 @@ from flet import (
     icons,
     IconButton,
     border_radius,
+    DataTable,
+    DataColumn,
+    DataRow,
+    DataCell,
+    ScrollMode
 )
+
+table = DataTable(
+            width=700,
+            bgcolor="blue",
+            columns=[
+                DataColumn(Text("First name")),
+                DataColumn(Text("Last name")),
+                DataColumn(Text("Age"), numeric=True),
+            ],
+            rows=[
+                DataRow(
+                    cells=[
+                        DataCell(Text("John")),
+                        DataCell(Text("Smith")),
+                        DataCell(Text("43")),
+                    ],
+                ),
+                DataRow(
+                    cells=[
+                        DataCell(Text("Jack")),
+                        DataCell(Text("Brown")),
+                        DataCell(Text("19")),
+                    ],
+                ),
+                DataRow(
+                    cells=[
+                        DataCell(Text("Alice")),
+                        DataCell(Text("Wong")),
+                        DataCell(Text("25")),
+                    ],
+                ),
+                DataRow(
+                    cells=[
+                        DataCell(Text("Cyrus")),
+                        DataCell(Text("Yeung")),
+                        DataCell(Text("35")),
+                    ],
+                ),
+            ],
+        )
 
 from MDI import Window,Panel
 
@@ -21,11 +66,11 @@ class WebAppMDI(UserControl):
     def __init__(self,page: Page,*args, **kwargs):
         super().__init__(*args, **kwargs)
         self.expand = True
-        self.page =page
+        self.page = page
         #Make Stack layer to full screenn for GestureDetector
         self.desktop = Stack(expand=True)
         self.wm = Stack(expand=True)
-        box01 = Window(Row([Container(Text("Content Area",color=colors.BLACK),expand=True)]),self,"Box1",id=1)
+        box01 = Window(Column([Row([Container(table)],scroll=ScrollMode.ALWAYS)],scroll=ScrollMode.ALWAYS),self,"Box1",id=1)
         self.wm.controls = [box01]
         self.panel = Panel(app=self)
         self.desktop.controls = [self.panel,self.wm]
@@ -36,7 +81,7 @@ class WebAppMDI(UserControl):
             expand=True,
             bgcolor=colors.BLUE_100
         )
-    
+
     def __addWindows(self,e):
         count = [i for i in self.wm.controls if i.__class__.__name__ == "Window"]
         count.sort(key=lambda x:x.id)
@@ -52,6 +97,7 @@ class WebAppMDI(UserControl):
 def main(page: Page):
     page.title = "window manager demo (MDI)"
     page.padding = 0
+    
     app = WebAppMDI(page)
     page.add(app)
 

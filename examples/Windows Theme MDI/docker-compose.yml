@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  flet-demo:
+    image: nikolaik/python-nodejs:python3.11-nodejs19-alpine
+#    restart: alwayo
+    networks:
+      - app-net
+    ports:
+      - "21210-21219:21210-21219"
+    volumes: 
+      - ./Day-02:/project
+    working_dir: /project
+    container_name: flet-demo
+    tty: true
+    stdin_open: true
+
+networks:
+    app-net:
+      external: true

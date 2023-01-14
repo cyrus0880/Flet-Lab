@@ -96,6 +96,13 @@ class Panel(Container):
         
         
     def PanelLayout(self):
+        LogoutBtn = Container(
+            IconButton(icons.EXIT_TO_APP,icon_color=colors.WHITE,icon_size=15,style=ButtonStyle(padding=Padding(0,0,0,0)),on_click=self.__logout),
+            height= 25,
+            width= 25,
+            border_radius=border_radius.all(20),
+            bgcolor=colors.BLACK45,
+        )
         AddBTN = Container(
             IconButton(icons.ADD,icon_color=colors.WHITE,icon_size=15,style=ButtonStyle(padding=Padding(0,0,0,0)),on_click=self.__addWindows),
             height= 25,
@@ -103,7 +110,7 @@ class Panel(Container):
             border_radius=border_radius.all(20),
             bgcolor=colors.BLACK45,
         )
-        widgets = [AddBTN] if len(self.widgets) == 0 else [AddBTN,self.widgets]
+        widgets = [LogoutBtn,AddBTN] if len(self.widgets) == 0 else [AddBTN,self.widgets]
         return Row(widgets)
     def __update(self):
         self.ListWM.getWM()
@@ -112,4 +119,9 @@ class Panel(Container):
         win._Window__show(None)
     def __addWindows(self,e):
         self.app._WebAppMDI__addWindows(e)
+    def __logout(self,e):
+        token = self.app.page.client_storage.get("token")
+        if token :
+            self.app.page.client_storage.remove("token")
+            self.app.CheckLogin()
     
