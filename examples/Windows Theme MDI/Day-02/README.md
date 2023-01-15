@@ -1,7 +1,7 @@
-# Day02 TraysCtrl & WindowsCtrl with WM
+# Day02 TraysCtr & WindowsCtr with WM
 
 Make Windows & Linux DM like Trays 
-ans make TraysCtrl & WindowsCtrl
+ans make TraysCtr & WindowsCtr
 
 Done:
  - windwos minimize and tray win minimize 
