@@ -110,7 +110,7 @@ class Panel(Container):
             border_radius=border_radius.all(20),
             bgcolor=colors.BLACK45,
         )
-        widgets = [LogoutBtn,AddBTN] if len(self.widgets) == 0 else [AddBTN,self.widgets]
+        widgets = [LogoutBtn,AddBTN,self.ListWM] if len(self.widgets) == 0 else [AddBTN,self.ListWM,self.widgets]
         return Row(widgets)
     def __update(self):
         self.ListWM.getWM()
